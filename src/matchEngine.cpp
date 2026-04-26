@@ -50,6 +50,9 @@ void MatchEngine::matchBuy(Order& o) {
 
         // get how many qty is traded
         int tradeQty = std::min(o.qty, sellOrder.qty);
+
+        printTransaction(sellOrder, o, tradeQty);
+
         o.qty -= tradeQty;
         sellOrder.qty -= tradeQty;
 
@@ -87,6 +90,9 @@ void MatchEngine::matchSell(Order& o) {
 
         // get how many qty is traded
         int tradeQty = std::min(o.qty, buyOrder.qty);
+
+        printTransaction(buyOrder, o, tradeQty);
+
         o.qty -= tradeQty;
         buyOrder.qty -= tradeQty;
 
@@ -216,7 +222,7 @@ void MatchEngine::print() const {
 
         }
 
-    std::cout << "BUY:\n";
+    std::cout << "BUY:" << std::endl;
     for (const auto& [price, q] : buyBook_) {
         long long totalQty = 0;
         for (const auto& entry : q) {
